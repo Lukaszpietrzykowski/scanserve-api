@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 @RequestMapping("/qrCode")
 @RequiredArgsConstructor
 public class QRCodeController {
-
     @GetMapping(value = "/generate/{barcode}", produces = MediaType.IMAGE_PNG_VALUE)
     public BufferedImage createQRCode(@PathVariable("barcode") String barcode) throws Exception {
         return QRCodeService.generateQRCodeImage(barcode);
