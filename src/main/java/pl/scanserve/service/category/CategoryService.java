@@ -17,7 +17,7 @@ public class CategoryService {
 
     public List<CategoryDTO> getCategories() {
         return categoryRepository.findAll().stream()
-                .map(CategoryEntity::toDto)
+                .map(CategoryEntity::toDTO)
                 .toList();
     }
 
@@ -43,6 +43,6 @@ public class CategoryService {
     }
 
     public CategoryDTO getCategory(Long categoryId) {
-        return CategoryEntity.toDto(categoryRepository.getReferenceById(categoryId));
+        return CategoryEntity.toDTO(categoryRepository.getReferenceById(categoryId));
     }
 }
