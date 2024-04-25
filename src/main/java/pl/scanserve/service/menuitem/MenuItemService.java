@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.scanserve.model.dto.menuitem.MenuItemCreateDTO;
 import pl.scanserve.model.dto.menuitem.MenuItemDTO;
-import pl.scanserve.model.entity.menu.MenuItemEntity;
+import pl.scanserve.model.entity.menuitem.MenuItemEntity;
 import pl.scanserve.repository.category.CategoryRepository;
 import pl.scanserve.repository.menuitem.MenuItemRepository;
 

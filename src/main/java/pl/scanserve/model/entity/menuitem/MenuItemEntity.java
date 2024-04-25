@@ -1,4 +1,4 @@
-package pl.scanserve.model.entity.menu;
+package pl.scanserve.model.entity.menuitem;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
