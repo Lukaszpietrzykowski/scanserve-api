@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.scanserve.model.dto.category.CategoryDTO;
+import pl.scanserve.model.dto.category.CategoryFullDTO;
 import pl.scanserve.model.entity.menuitem.MenuItemEntity;
 
 import java.util.ArrayList;
@@ -44,5 +45,18 @@ public class CategoryEntity {
                 .displayName(category.getDisplayName())
                 .active(category.isActive())
                 .build();
+    }
+
+    public static CategoryFullDTO toFullDTO(CategoryEntity category) {
+        return CategoryFullDTO.builder()
+                .categoryName(category.getCategoryName())
+                .menuItems(MenuItemEntity.toMobileDTOs(category.getMenuItems()))
+                .build();
+    }
+
+    public static List<CategoryFullDTO> toFullDTOs(List<CategoryEntity> categoryEntities) {
+        return categoryEntities.stream()
+                .map(CategoryEntity::toFullDTO)
+                .toList();
     }
 }

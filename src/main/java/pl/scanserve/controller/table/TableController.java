@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.scanserve.model.dto.table.TableCreateDTO;
 import pl.scanserve.model.dto.table.TableDTO;
+import pl.scanserve.model.dto.table.TableFullDTO;
 import pl.scanserve.service.table.TableService;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class TableController {
     @GetMapping
     public List<TableDTO> getTables() {
         return tableService.getTables();
+    }
+
+    @GetMapping("/{tableId}")
+    public TableFullDTO getTableFullInfo(@PathVariable Long tableId) {
+        return tableService.getTableFullInfo(tableId);
     }
 
     @PostMapping

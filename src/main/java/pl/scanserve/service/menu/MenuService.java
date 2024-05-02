@@ -1,5 +1,6 @@
 package pl.scanserve.service.menu;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.scanserve.model.dto.menu.MenuCreateDTO;
@@ -39,13 +40,14 @@ public class MenuService {
         menuRepository.deleteById(menuId);
     }
 
+    @Transactional
     public void updateMenu(MenuDTO menu) {
         MenuEntity menuEntity = menuRepository.getReferenceById(menu.getId());
         menuEntity.setName(menu.getName());
         menuEntity.setDisplayName(menu.getDisplayName());
         menuEntity.setCategories(menu.getCategoryIds().stream()
                 .map(categoryRepository::getReferenceById)
-                .toList());
+                .collect(Collectors.toList()));
         menuRepository.save(menuEntity);
     }
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.scanserve.model.dto.table.TableCreateDTO;
 import pl.scanserve.model.dto.table.TableDTO;
+import pl.scanserve.model.dto.table.TableFullDTO;
+import pl.scanserve.model.entity.menu.MenuEntity;
 import pl.scanserve.model.entity.table.TableEntity;
 import pl.scanserve.repository.menu.MenuRepository;
 import pl.scanserve.repository.table.TableRepository;
@@ -42,5 +44,13 @@ public class TableService {
         tableEntity.setSeatingCapacity(tableDTO.getSeatingCapacity());
         tableEntity.setMenu(menuRepository.getReferenceById(tableDTO.getMenuId()));
         tableRepository.save(tableEntity);
+    }
+
+    public TableFullDTO getTableFullInfo(Long tableId) {
+        TableEntity tableEntity = tableRepository.getReferenceById(tableId);
+        return TableFullDTO.builder()
+                .name(tableEntity.getName())
+                .menu(MenuEntity.toFullDTO(tableEntity.getMenu()))
+                .build();
     }
 }

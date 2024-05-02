@@ -1,7 +1,6 @@
 package pl.scanserve.model.entity.menuitem;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,9 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.scanserve.model.dto.menuitem.MenuItemDTO;
+import pl.scanserve.model.dto.menuitem.MenuItemMobileDTO;
 import pl.scanserve.model.entity.category.CategoryEntity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Builder
@@ -35,7 +36,7 @@ public class MenuItemEntity {
     private String description;
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
@@ -55,5 +56,20 @@ public class MenuItemEntity {
                 .image(menuItem.getItemImage())
                 .build();
 
+    }
+
+    public static MenuItemMobileDTO toMobileDTO(MenuItemEntity menuItemEntity) {
+        return MenuItemMobileDTO.builder()
+                .name(menuItemEntity.getName())
+                .description(menuItemEntity.getDescription())
+                .price(menuItemEntity.getPrice())
+                .image(menuItemEntity.getItemImage())
+                .build();
+    }
+
+    public static List<MenuItemMobileDTO> toMobileDTOs(List<MenuItemEntity> menuItemEntities) {
+        return menuItemEntities.stream()
+                .map(MenuItemEntity::toMobileDTO)
+                .toList();
     }
 }
