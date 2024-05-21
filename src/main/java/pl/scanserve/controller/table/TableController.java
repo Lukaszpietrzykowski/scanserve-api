@@ -34,7 +34,7 @@ public class TableController {
     }
 
     @PostMapping
-    public void createTable(@RequestBody TableCreateDTO tableCreate) {
+    public void createTable(@RequestBody TableCreateDTO tableCreate) throws Exception {
         tableService.createTable(tableCreate);
     }
 

@@ -1,4 +1,4 @@
-package pl.scanserve.model.dto.menuitem;
+package pl.scanserve.model.dto.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +13,10 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MenuItemMobileDTO {
+public class OrderDTO {
 
-    private Long menuItemId;
-    private String name;
-    private String description;
-    private BigDecimal price;
-    private byte[] image;
+    private Long orderId;
+    private Long tableId;
+    private BigDecimal totalPrice;
+    private OrderStatus status;
 }

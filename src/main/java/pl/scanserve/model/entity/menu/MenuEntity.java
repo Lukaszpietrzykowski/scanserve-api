@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "menu")
 @Builder
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class MenuEntity {
     private boolean active;
 
     @OneToMany
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category", referencedColumnName = "id")
     private List<CategoryEntity> categories = new ArrayList<>();
 
 

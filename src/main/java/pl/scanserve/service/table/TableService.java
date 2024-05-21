@@ -1,5 +1,6 @@
 package pl.scanserve.service.table;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.scanserve.model.dto.table.TableCreateDTO;
@@ -9,7 +10,12 @@ import pl.scanserve.model.entity.menu.MenuEntity;
 import pl.scanserve.model.entity.table.TableEntity;
 import pl.scanserve.repository.menu.MenuRepository;
 import pl.scanserve.repository.table.TableRepository;
+import pl.scanserve.service.qrcode.QRCodeService;
 
+import javax.imageio.ImageIO;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -25,12 +31,17 @@ public class TableService {
                 .toList();
     }
 
-    public void createTable(TableCreateDTO tableCreate) {
+    public void createTable(TableCreateDTO tableCreate) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         TableEntity tableEntity = TableEntity.builder()
                 .name(tableCreate.getName())
                 .seatingCapacity(tableCreate.getSeatingCapacity())
                 .menu(menuRepository.getReferenceById(tableCreate.getMenuId()))
                 .build();
+        TableEntity save = tableRepository.save(tableEntity);
+        ImageIO.write(QRCodeService.generateQRCodeImage(String.format("http://192.168.0.178:5173/mobile/%d/menu", save.getId())), "png", baos);
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        save.setQrCode(is.readAllBytes());
         tableRepository.save(tableEntity);
     }
 
@@ -46,6 +57,7 @@ public class TableService {
         tableRepository.save(tableEntity);
     }
 
+    @Transactional
     public TableFullDTO getTableFullInfo(Long tableId) {
         TableEntity tableEntity = tableRepository.getReferenceById(tableId);
         return TableFullDTO.builder()

@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import pl.scanserve.model.dto.table.TableDTO;
 import pl.scanserve.model.entity.menu.MenuEntity;
 
 @Entity
+@Table(name = "scanserve_table")
 @Builder
 @Getter
 @Setter
@@ -33,6 +35,8 @@ public class TableEntity {
     @JoinColumn(name = "menu_id")
     private MenuEntity menu;
 
+    private byte[] qrCode;
+
     public static TableDTO toDTO(TableEntity table) {
         return TableDTO.builder()
                 .id(table.getId())
@@ -40,6 +44,7 @@ public class TableEntity {
                 .seatingCapacity(table.getSeatingCapacity())
                 .menuId(table.getMenu().getId())
                 .menuName(table.getMenu().getName())
+                .qrCode(table.getQrCode())
                 .build();
     }
 }

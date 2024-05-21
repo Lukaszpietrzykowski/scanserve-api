@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@Table(name = "menu_item")
 @Builder
 @Getter
 @Setter
@@ -60,6 +62,7 @@ public class MenuItemEntity {
 
     public static MenuItemMobileDTO toMobileDTO(MenuItemEntity menuItemEntity) {
         return MenuItemMobileDTO.builder()
+                .menuItemId(menuItemEntity.getId())
                 .name(menuItemEntity.getName())
                 .description(menuItemEntity.getDescription())
                 .price(menuItemEntity.getPrice())

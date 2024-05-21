@@ -51,4 +51,10 @@ public class MenuItemService {
         menuItemEntity.setCategory(categoryRepository.getReferenceById(menuItem.getCategoryId()));
         menuItemRepository.save(menuItemEntity);
     }
+
+    public MenuItemDTO getMenuItemById(Long menuItemId) throws Exception {
+        return menuItemRepository.findById(menuItemId)
+                .map(MenuItemEntity::toDTO)
+                .orElseThrow(() -> new Exception("Item not found"));
+    }
 }

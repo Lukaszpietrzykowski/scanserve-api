@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "category")
 @Getter
 @Setter
 @Builder
@@ -34,8 +36,7 @@ public class CategoryEntity {
     private String displayName;
     private boolean active;
 
-    @OneToMany
-    @JoinColumn(name = "menu_item_id")
+    @OneToMany(mappedBy = "category")
     private List<MenuItemEntity> menuItems = new ArrayList<>();
 
     public static CategoryDTO toDTO(CategoryEntity category) {
@@ -49,6 +50,7 @@ public class CategoryEntity {
 
     public static CategoryFullDTO toFullDTO(CategoryEntity category) {
         return CategoryFullDTO.builder()
+                .categoryId(category.getId())
                 .categoryName(category.getCategoryName())
                 .menuItems(MenuItemEntity.toMobileDTOs(category.getMenuItems()))
                 .build();

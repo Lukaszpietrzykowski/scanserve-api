@@ -18,4 +18,5 @@ public class TableDTO {
     private Long seatingCapacity;
     private String menuName;
     private Long menuId;
+    private byte[] qrCode;
 }

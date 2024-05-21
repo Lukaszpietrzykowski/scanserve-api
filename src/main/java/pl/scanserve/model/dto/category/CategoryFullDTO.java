@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoryFullDTO {
 
+    private Long categoryId;
     private String categoryName;
     private List<MenuItemMobileDTO> menuItems = new ArrayList<>();
 }

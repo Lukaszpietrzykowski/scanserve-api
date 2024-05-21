@@ -30,6 +30,11 @@ public class MenuItemController {
         return menuItemService.getMenuItems();
     }
 
+    @GetMapping("/{menuItemId}")
+    public MenuItemDTO getMenuItem(@PathVariable Long menuItemId) throws Exception {
+        return menuItemService.getMenuItemById(menuItemId);
+    }
+
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updateMenuItem(@RequestPart("menuItem") MenuItemDTO menuItem, @RequestPart("image") MultipartFile image) throws IOException {
         menuItemService.updateMenuItem(menuItem, image);
