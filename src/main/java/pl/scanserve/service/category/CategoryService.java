@@ -1,5 +1,6 @@
 package pl.scanserve.service.category;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.scanserve.model.dto.category.CategoryCreateDTO;
@@ -15,6 +16,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public List<CategoryDTO> getCategories() {
         return categoryRepository.findAll().stream()
                 .map(CategoryEntity::toDTO)

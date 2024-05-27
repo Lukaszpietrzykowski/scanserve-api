@@ -45,13 +45,14 @@ public class CategoryEntity {
                 .categoryName(category.getCategoryName())
                 .displayName(category.getDisplayName())
                 .active(category.isActive())
+                .itemsInCategory(category.getMenuItems().size())
                 .build();
     }
 
     public static CategoryFullDTO toFullDTO(CategoryEntity category) {
         return CategoryFullDTO.builder()
                 .categoryId(category.getId())
-                .categoryName(category.getCategoryName())
+                .categoryName(category.getDisplayName())
                 .menuItems(MenuItemEntity.toMobileDTOs(category.getMenuItems()))
                 .build();
     }

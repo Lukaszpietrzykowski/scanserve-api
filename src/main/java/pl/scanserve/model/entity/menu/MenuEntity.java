@@ -37,7 +37,7 @@ public class MenuEntity {
     private boolean active;
 
     @OneToMany
-    @JoinColumn(name = "category", referencedColumnName = "id")
+    @JoinColumn(name = "menu_id", referencedColumnName = "id")
     private List<CategoryEntity> categories = new ArrayList<>();
 
 

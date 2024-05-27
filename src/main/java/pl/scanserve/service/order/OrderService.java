@@ -15,6 +15,8 @@ import pl.scanserve.repository.table.TableRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,9 +31,13 @@ public class OrderService {
                 .map(menuItemOrder -> menuItemRepository.findById(menuItemOrder.getMenuItemId()).orElse(null))
                 .toList();
 
+        Map<Long, Long> itemAmountMap = orderCreateDTO.getMenuItems()
+                .stream()
+                .collect(Collectors.toMap(OrderCreateDTO.MenuItemOrder::getMenuItemId, OrderCreateDTO.MenuItemOrder::getAmount));
+
         OrderEntity orderEntity = OrderEntity.builder()
                 .table(tableRepository.getReferenceById(orderCreateDTO.getTableId()))
-                .orderTotalAmount(calculateOrderTotalAmount(menuItems))
+                .orderTotalAmount(calculateOrderTotalAmount(menuItems, itemAmountMap))
                 .status(OrderStatus.NEW)
                 .orderTime(LocalDate.now())
                 .orderedMenuItems(menuItems)
@@ -40,9 +46,9 @@ public class OrderService {
     }
 
 
-    private BigDecimal calculateOrderTotalAmount(List<MenuItemEntity> menuItems) {
+    private BigDecimal calculateOrderTotalAmount(List<MenuItemEntity> menuItems, Map<Long, Long> itemAmountMap) {
         return menuItems.stream()
-                .map(MenuItemEntity::getPrice)
+                .map(menuItemEntity -> menuItemEntity.getPrice().multiply(BigDecimal.valueOf(itemAmountMap.get(menuItemEntity.getId()))))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

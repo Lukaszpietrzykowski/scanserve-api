@@ -17,4 +17,5 @@ public class CategoryDTO {
     private String categoryName;
     private String displayName;
     private boolean active;
+    private int itemsInCategory;
 }
