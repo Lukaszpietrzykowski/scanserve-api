@@ -44,6 +44,7 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
+    @Transactional
     public CategoryDTO getCategory(Long categoryId) {
         return CategoryEntity.toDTO(categoryRepository.getReferenceById(categoryId));
     }
